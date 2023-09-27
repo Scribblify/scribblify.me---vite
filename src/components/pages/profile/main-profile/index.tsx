@@ -7,7 +7,7 @@ import SocialMediaLinks from "./customs/social-media-links";
 
 const MainProfile: FC = () => {
   return (
-    <div className="w-[30%] max-lg:w-[40%] bg-white dark:bg-[#222222] p-4 rounded-3xl max-md:w-full">
+    <div className="w-[30%] max-lg:w-[40%] bg-white dark:bg-[#222222] p-4 rounded-3xl max-md:w-full border dark:border-[#393939] transition-colors">
       <Avatar className="w-[104px] h-[104px] m-auto">
         <AvatarImage src="https://github.com/scribblify.png" />
         <AvatarFallback className="bg-[#CC6566] text-white font-semibold text-[32px] dark:bg-[#CC6566] dark:border-[#2B2B2C]">

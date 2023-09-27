@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import type { FC } from "react";
+import Post from "./post";
 
 const Posts: FC = () => {
   return (
@@ -18,6 +19,9 @@ const Posts: FC = () => {
           placeholder="Search..."
           type="search"
         />
+      </div>
+      <div className="mt-3">
+        <Post />
       </div>
     </div>
   );
