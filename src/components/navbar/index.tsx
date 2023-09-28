@@ -11,21 +11,17 @@ import logo from "/logo.png";
 import ProfileMenu from "./profile-menu";
 import LogOut from "./profile-menu/logout-dialog";
 import Setting from "./settings";
-import { useReduxSelector } from "@/hooks/useRedux";
 import { useAuth } from "@/tools/auth";
 import { Button } from "../ui/button";
 
 const Navbar: FC = () => {
   const { isAuthed } = useAuth();
-  const { profileModal, logOutDialogVisibility } = useReduxSelector(
-    (state) => state.modal
-  );
 
   return (
     <>
-      <div className="h-[51px] flex items-center px-5 bg-[#FCFCFC] dark:bg-[#222222] justify-between bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-60 border-gray-200">
-        {logOutDialogVisibility && <LogOut />}
-        {profileModal && <Setting />}
+      <div className="h-[51px] sticky top-0 flex items-center px-5 bg-[#FCFCFC] dark:bg-[#222222] justify-between">
+        <LogOut />
+        <Setting />
         <div className="flex items-center gap-2 cursor-pointer ">
           <Link className="cursor-pointer" to={"/"}>
             <img
