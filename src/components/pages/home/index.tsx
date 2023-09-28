@@ -2,6 +2,8 @@ import type { FC } from "react";
 import { Helmet } from "react-helmet-async";
 import MyFeed from "./my-feed";
 import FeaturedAuthors from "./featured-authors";
+import Footer from "./footer";
+import { useAuth } from "@/tools/auth";
 
 const HomeHelmet: FC = () => {
   return (
@@ -17,11 +19,22 @@ const HomeHelmet: FC = () => {
 };
 
 const Home: FC = () => {
+  const { isAuthed } = useAuth();
+
   return (
     <div>
       <HomeHelmet />
-      <MyFeed />
-      <FeaturedAuthors />
+      {!isAuthed ? (
+        <>
+          <MyFeed />
+          <FeaturedAuthors />
+          <Footer />
+        </>
+      ) : (
+        <>
+          <Footer />
+        </>
+      )}
     </div>
   );
 };
