@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import FeatureCard from "./feature-card";
+import { useNavigate } from "react-router-dom";
 
 const Animation = () => {
+  const navigate = useNavigate();
   return (
     <div className="text-center  mt-9 max-w-[1200px] m-auto gap-8 px-5">
       <div>
@@ -21,7 +23,10 @@ const Animation = () => {
           Scribblify - is an online publishing platform that allows writers to
           share their stories and perspectives with a global audience.
         </div>
-        <Button className="mt-9 p-6 bg-gradient-to-r from-[#1B9DF5] via-[#1B9DF5] to-[#2A63E7]  bg-clip text-white text-[1rem]">
+        <Button
+          onClick={() => navigate("/auth")}
+          className="mt-9 p-6 bg-gradient-to-r from-[#1B9DF5] via-[#1B9DF5] to-[#2A63E7]  bg-clip text-white text-[1rem]"
+        >
           Join to Scribblify
         </Button>
       </div>
@@ -57,7 +62,10 @@ const Animation = () => {
           icon="community"
         />
         <div className="my-12">
-          <Button className="p-6 m-auto bg-gradient-to-r from-[#1B9DF5] via-[#1B9DF5] to-[#2A63E7]  bg-clip text-white text-[1rem]">
+          <Button
+            onClick={() => navigate("/auth")}
+            className="p-6 m-auto bg-gradient-to-r from-[#1B9DF5] via-[#1B9DF5] to-[#2A63E7]  bg-clip text-white text-[1rem]"
+          >
             Join to Scribblify
           </Button>
         </div>
