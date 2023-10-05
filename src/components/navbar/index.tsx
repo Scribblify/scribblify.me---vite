@@ -6,7 +6,7 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { IconRenderer } from "@/generic/icon-renderer";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "/logo.png";
 import ProfileMenu from "./profile-menu";
 import LogOut from "./profile-menu/logout-dialog";
@@ -15,6 +15,7 @@ import { useAuth } from "@/tools/auth";
 import { Button } from "../ui/button";
 
 const Navbar: FC = () => {
+  const navigate = useNavigate();
   const { isAuthed } = useAuth();
 
   return (
@@ -126,7 +127,7 @@ const Navbar: FC = () => {
             <ProfileMenu />
           </div>
         ) : (
-          <Button>Join</Button>
+          <Button onClick={() => navigate("/auth")}>Join</Button>
         )}
       </div>
       <Outlet />

@@ -4,7 +4,7 @@ import MyFeed from "./my-feed";
 import FeaturedAuthors from "./featured-authors";
 import Footer from "./footer";
 import { useAuth } from "@/tools/auth";
-import Animation from "./opener";
+import Opener from "./opener";
 
 const HomeHelmet: FC = () => {
   return (
@@ -33,7 +33,7 @@ const Home: FC = () => {
         </>
       ) : (
         <>
-          <Animation />
+          <Opener />
           <Footer />
         </>
       )}
