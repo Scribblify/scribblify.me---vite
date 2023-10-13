@@ -14,8 +14,11 @@ import { data } from "@/utils/settings";
 import { useReduxDispatch, useReduxSelector } from "@/hooks/useRedux";
 import MobileDashboard from "./mobile-dashboard";
 import { setProfileModalVisibility } from "@/redux/modalSlice";
+import { useAuthUser } from "react-auth-kit";
+import { UserType } from "@/@types";
 
 const Setting: FC = () => {
+  const auth = useAuthUser()() as UserType;
   const dispatch = useReduxDispatch();
   const { settingActive } = useReduxSelector((state) => state.selector);
   const { profileModal } = useReduxSelector((state) => state.modal);
@@ -35,7 +38,7 @@ const Setting: FC = () => {
                     A
                   </AvatarFallback>
                 </Avatar>
-                <span className="font-medium text-6">@abduvoitov</span>
+                <span className="font-medium text-6">@{auth?.username}</span>
               </div>
               <MobileDashboard />
               <IconRenderer

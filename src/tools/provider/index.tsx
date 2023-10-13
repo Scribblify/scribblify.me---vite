@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { HelmetProvider } from "react-helmet-async";
 import { useReduxSelector } from "@/hooks/useRedux";
+import { Toaster } from "@/components/ui/toaster";
 
 interface ProviderProps {
   children?: React.ReactNode;
@@ -30,6 +31,7 @@ const ProviderConfig: FC<ProviderProps> = ({ children }) => {
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools />
           <HelmetProvider>
+            <Toaster />
             <BrowserRouter>{children}</BrowserRouter>
           </HelmetProvider>
         </QueryClientProvider>

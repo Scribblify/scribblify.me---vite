@@ -23,3 +23,16 @@ export type SettingItemType = {
   Component?: React.ElementType<{ key: number }>;
   path?: SettingPrePages;
 };
+
+export type UserType = {
+  display_name?: string | null;
+  username?: string;
+  email?: string;
+  id?: number;
+  password?: string;
+};
+
+export type AuthResponse = {
+  data: { token: string; user: UserType };
+  message: "error" | "success";
+};

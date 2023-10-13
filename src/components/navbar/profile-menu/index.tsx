@@ -17,8 +17,11 @@ import {
   setLogOutDialogVisibility,
   setProfileModalVisibility,
 } from "@/redux/modalSlice";
+import { useAuthUser } from "react-auth-kit";
+import { UserType } from "@/@types";
 
 const ProfileMenu: FC = () => {
+  const auth = useAuthUser()() as UserType;
   const dispatch = useReduxDispatch();
   const navigate = useNavigate();
   return (
@@ -31,7 +34,7 @@ const ProfileMenu: FC = () => {
               A
             </AvatarFallback>
           </Avatar>
-          <span className="font-medium text-[14px]">@abduvoitov</span>
+          <span className="font-medium text-[14px]">@{auth?.username}</span>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 dark:bg-[#222222] dark:border-[#2B2B2C]">
