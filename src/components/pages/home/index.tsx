@@ -29,7 +29,6 @@ const Home: FC = () => {
         <>
           <MyFeed />
           <FeaturedAuthors />
-          <Footer />
         </>
       ) : (
         <>

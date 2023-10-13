@@ -11,10 +11,19 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useReduxDispatch, useReduxSelector } from "@/hooks/useRedux";
 import { setLogOutDialogVisibility } from "@/redux/modalSlice";
+import { useSignOut } from "react-auth-kit";
+import { useNavigate } from "react-router-dom";
 
 const LogOut: FC = () => {
+  const signOut = useSignOut();
+  const navigate = useNavigate();
   const { logOutDialogVisibility } = useReduxSelector((state) => state.modal);
   const dispatch = useReduxDispatch();
+
+  const onSignOut = () => {
+    signOut();
+    navigate("/");
+  };
 
   return (
     <AlertDialog
@@ -31,7 +40,12 @@ const LogOut: FC = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Sign out</AlertDialogAction>
+          <AlertDialogAction
+            onClick={onSignOut}
+            className="bg-red-500 text-white hover:bg-red-500"
+          >
+            Sign out
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

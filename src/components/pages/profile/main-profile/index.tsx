@@ -4,8 +4,12 @@ import { Separator } from "@/components/ui/separator";
 import { IconRendererWithText } from "@/generic/icon-renderer";
 import type { FC } from "react";
 import SocialMediaLinks from "./customs/social-media-links";
+import { useAuthUser } from "react-auth-kit";
+import { UserType } from "@/@types";
 
 const MainProfile: FC = () => {
+  const auth = useAuthUser()() as UserType;
+
   return (
     <div className="w-[30%] max-lg:w-[40%] bg-white dark:bg-[#222222] p-4 rounded-3xl max-md:w-full border dark:border-[#393939] transition-colors">
       <Avatar className="w-[104px] h-[104px] m-auto">
@@ -15,7 +19,7 @@ const MainProfile: FC = () => {
         </AvatarFallback>
       </Avatar>
       <h3 className="font-semibold text-2xl mt-[20px] text-center">
-        @abduvoitov
+        @{auth?.username}
       </h3>
       <Button
         variant="outline"
