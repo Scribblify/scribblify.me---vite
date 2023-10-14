@@ -1,11 +1,17 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import SignUp from "./sign-up";
 import SignIn from "./sign-in";
+import { useSearchParams } from "react-router-dom";
+
+type PathType = "sign-in" | "sign-up";
 
 const Auth: FC = () => {
-  const [active, setActive] = useState<"sign-in" | "sign-up">("sign-in");
+  const [params, setParams] = useSearchParams();
 
   const unactive_style: string = "text-[#BABABA] dark:text-[#5F5F5F]";
+
+  const redirect = ({ path }: { path: PathType }) => setParams({ path });
+  const active = (params.get("path") ?? "sign-in") as PathType;
 
   return (
     <div className="w-full h-full flex items-center justify-center px-5">
@@ -15,15 +21,15 @@ const Auth: FC = () => {
             className={`cursor-pointer text-1xl font-bold transition-colors ${
               active !== "sign-in" && unactive_style
             }`}
-            onClick={() => setActive("sign-in")}
+            onClick={() => redirect({ path: "sign-in" })}
           >
             Sign In
           </h3>
           <h3
             className={`cursor-pointer text-1xl font-bold transition-colors ${
-              active !== "sign-up" && unactive_style
+              active === "sign-in" && unactive_style
             }`}
-            onClick={() => setActive("sign-up")}
+            onClick={() => redirect({ path: "sign-up" })}
           >
             Sign Up
           </h3>

@@ -2,64 +2,97 @@ import { FC, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import facebook from "/social-outlets/facebook.svg";
-import linkedin from "/social-outlets/linkedin.svg";
-import whatsapp from "/social-outlets/whatsapp.svg";
-import vk from "/social-outlets/vk.svg";
-import apple from "/social-outlets/apple.svg";
+import twitter from "/social-outlets/twitter.svg";
 import google from "/social-outlets/google.svg";
 import { IconRenderer } from "@/generic/icon-renderer";
 import { Button } from "@/components/ui/button";
-import { useAxios } from "@/hooks/useAxios";
-import { useToast } from "@/components/ui/use-toast";
-import { AuthResponse } from "@/@types";
-import { useSignIn } from "react-auth-kit";
-import { useNavigate } from "react-router-dom";
+import {
+  signInWithFacebook,
+  signInWithGoogle,
+  signInWithTwitter,
+} from "@/config";
+import AuthProcess from "../customs/auth-process";
+import { useReduxDispatch } from "@/hooks/useRedux";
+import { setAuthProcessDialog } from "@/redux/modalSlice";
+import { useAuth } from "../customs/request";
+import { Helmet } from "react-helmet-async";
+
+const SignInHelmet: FC = () => {
+  return (
+    <Helmet>
+      <title>Scribblify - Sign In</title>
+      <meta
+        name="description"
+        content="Scribblify - is an online publishing platform that allows writers to share their stories and perspectives with a global audience."
+      />
+      <link rel="canonical" href="/auth?path=sign-in" />
+    </Helmet>
+  );
+};
 
 const SignIn: FC = () => {
+  const dispatch = useReduxDispatch();
   const [loading, setLoading] = useState<boolean>(false);
-  const signIn = useSignIn();
-  const navigate = useNavigate();
-  const { toast } = useToast();
-  const axios = useAxios();
+  const auth = useAuth();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const onSignIn = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const onSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     setLoading(true);
 
-    axios({
+    await auth({
       url: "/user/sign-in",
-      method: "POST",
       body: {
         email: emailRef.current?.value,
         password: passwordRef.current?.value,
       },
-    })
-      .then((res) => {
-        const { data }: { data: AuthResponse } = res;
-        signIn({
-          token: data.data.token,
-          expiresIn: 7200,
-          tokenType: "Bearer",
-          authState: data.data.user,
-        });
-        navigate("/");
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log(error);
+    });
 
-        return toast({
-          title: error.response.statusText,
-          description: error.response.data.extraMessage,
-          variant: "destructive",
-        });
-      });
+    setLoading(false);
+  };
+
+  const signWithGoogle = async () => {
+    const data = await signInWithGoogle();
+
+    dispatch(setAuthProcessDialog()); // Dialog -> true
+
+    await auth({
+      url: "/user/sign-in/google",
+      body: {
+        email: data.user.email,
+      },
+    });
+
+    dispatch(setAuthProcessDialog()); // Dialog -> false
+  };
+
+  const signWithFacebook = async () => {
+    const data = await signInWithFacebook();
+
+    console.log(data);
+  };
+
+  const singWithTwitter = async () => {
+    const data = await signInWithTwitter();
+
+    dispatch(setAuthProcessDialog()); // Dialog -> true
+
+    await auth({
+      url: "/user/sign-in/twitter",
+      body: {
+        uid: data.user.uid,
+      },
+    });
+
+    dispatch(setAuthProcessDialog()); // Dialog -> false
   };
 
   return (
     <div>
+      <SignInHelmet />
+      <AuthProcess />
       <form onSubmit={onSignIn}>
         <Input
           required
@@ -97,23 +130,14 @@ const SignIn: FC = () => {
         <Separator className="my-6" />
       </div>
       <div className="flex gap-2 justify-center">
-        <IconRenderer>
+        <IconRenderer onClick={signWithGoogle}>
           <img src={google} alt={"google"} />
         </IconRenderer>
-        <IconRenderer>
+        <IconRenderer onClick={signWithFacebook}>
           <img src={facebook} alt={"facebook"} />
         </IconRenderer>
-        <IconRenderer>
-          <img src={apple} alt={"apple"} />
-        </IconRenderer>
-        <IconRenderer>
-          <img src={linkedin} alt={"linkedin"} />
-        </IconRenderer>
-        <IconRenderer>
-          <img src={whatsapp} alt={"whatsapp"} />
-        </IconRenderer>
-        <IconRenderer>
-          <img src={vk} alt={"vk"} />
+        <IconRenderer onClick={singWithTwitter}>
+          <img src={twitter} alt={"twitter"} />
         </IconRenderer>
       </div>
     </div>

@@ -24,7 +24,7 @@ const Animation = () => {
           share their stories and perspectives with a global audience.
         </div>
         <Button
-          onClick={() => navigate("/auth")}
+          onClick={() => navigate("/auth?path=sign-in")}
           className="mt-9 p-6 bg-gradient-to-r from-[#1B9DF5] via-[#1B9DF5] to-[#2A63E7]  bg-clip text-white text-[1rem]"
         >
           Join to Scribblify
@@ -63,7 +63,7 @@ const Animation = () => {
         />
         <div className="my-12">
           <Button
-            onClick={() => navigate("/auth")}
+            onClick={() => navigate("/auth?path=sign-in")}
             className="p-6 m-auto bg-gradient-to-r from-[#1B9DF5] via-[#1B9DF5] to-[#2A63E7]  bg-clip text-white text-[1rem]"
           >
             Join to Scribblify

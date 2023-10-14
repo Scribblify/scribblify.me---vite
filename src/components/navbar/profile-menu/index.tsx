@@ -43,7 +43,7 @@ const ProfileMenu: FC = () => {
         <DropdownMenuGroup>
           {/* Profile */}
           <DropdownMenuItem
-            onClick={() => navigate("/@abduvoitov")}
+            onClick={() => navigate(`/@${auth.username}`)}
             className="cursor-pointer"
           >
             Profile

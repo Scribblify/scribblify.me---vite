@@ -127,7 +127,7 @@ const Navbar: FC = () => {
             <ProfileMenu />
           </div>
         ) : (
-          <Button onClick={() => navigate("/auth")}>Join</Button>
+          <Button onClick={() => navigate("/auth?path=sign-in")}>Join</Button>
         )}
       </div>
       <Outlet />
