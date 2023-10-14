@@ -2,11 +2,13 @@ import type { FC } from "react";
 import { Helmet } from "react-helmet-async";
 import MainProfile from "./main-profile";
 import Posts from "./posts";
+import { useParams } from "react-router-dom";
 
 const ProfileHelmet: FC = () => {
+  const { username } = useParams();
   return (
     <Helmet>
-      <title>@abduvoitov - Scribblify</title>
+      <title>{username} - Scribblify</title>
       <meta
         name="description"
         content="Loves reading and exploring new stuff."

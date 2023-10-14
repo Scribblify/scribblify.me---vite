@@ -4,64 +4,53 @@ import { Input } from "@/components/ui/input";
 import { IconRenderer } from "@/generic/icon-renderer";
 import { Separator } from "@/components/ui/separator";
 import facebook from "/social-outlets/facebook.svg";
-import linkedin from "/social-outlets/linkedin.svg";
-import whatsapp from "/social-outlets/whatsapp.svg";
-import vk from "/social-outlets/vk.svg";
-import apple from "/social-outlets/apple.svg";
+import twitter from "/social-outlets/twitter.svg";
 import google from "/social-outlets/google.svg";
-import { useSignIn } from "react-auth-kit";
-import { useNavigate } from "react-router-dom";
-import { useToast } from "@/components/ui/use-toast";
-import { useAxios } from "@/hooks/useAxios";
-import { AuthResponse } from "@/@types";
+import { useAuth } from "../customs/request";
+import { Helmet } from "react-helmet-async";
+
+const SignUpHelmet: FC = () => {
+  return (
+    <Helmet>
+      <title>Scribblify - Sign Up</title>
+      <meta
+        name="description"
+        content="Scribblify - is an online publishing platform that allows writers to share their stories and perspectives with a global audience."
+      />
+      <link rel="canonical" href="/auth?path=sign-up" />
+    </Helmet>
+  );
+};
 
 const SignUp: FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const signIn = useSignIn();
-  const navigate = useNavigate();
-  const { toast } = useToast();
-  const axios = useAxios();
+  const auth = useAuth();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const usernameRef = useRef<HTMLInputElement>(null);
 
-  const onSignUp = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    axios({
+
+    await auth({
       url: "/user/sign-up",
-      method: "POST",
       body: {
         email: emailRef.current?.value,
         password: passwordRef.current?.value,
         username: usernameRef.current?.value,
       },
-    })
-      .then((res) => {
-        const { data }: { data: AuthResponse } = res;
+    });
 
-        signIn({
-          token: data.data.token,
-          expiresIn: 7200,
-          tokenType: "Bearer",
-          authState: data.data.user,
-        });
-        navigate("/");
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        return toast({
-          title: error.response.statusText,
-          description: error.response.data.extraMessage,
-          variant: "destructive",
-        });
-      });
+    setLoading(false);
   };
+
   return (
     <div>
+      <SignUpHelmet />
       <form onSubmit={onSignUp}>
         <Input
+          type="email"
           required
           ref={emailRef}
           className="mt-3"
@@ -77,7 +66,10 @@ const SignUp: FC = () => {
           max={40}
         />
         <div className="relative">
-          <p className="absolute dark:text-[#fff] text-sm top-[10px] left-3">
+          <p
+            onClick={() => usernameRef.current?.focus()}
+            className="absolute dark:text-[#fff] text-sm top-[10px] left-3 select-none"
+          >
             scribblify.me/@
           </p>
           <Input
@@ -115,16 +107,7 @@ const SignUp: FC = () => {
           <img src={facebook} alt={"facebook"} />
         </IconRenderer>
         <IconRenderer>
-          <img src={apple} alt={"apple"} />
-        </IconRenderer>
-        <IconRenderer>
-          <img src={linkedin} alt={"linkedin"} />
-        </IconRenderer>
-        <IconRenderer>
-          <img src={whatsapp} alt={"whatsapp"} />
-        </IconRenderer>
-        <IconRenderer>
-          <img src={vk} alt={"vk"} />
+          <img src={twitter} alt={"twitter"} />
         </IconRenderer>
       </div>
     </div>

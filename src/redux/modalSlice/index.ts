@@ -1,13 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type InitialStateProps = {
-  logOutDialogVisibility: boolean;
   profileModal: boolean;
+  logOutDialogVisibility: boolean;
+  authProcessDialog: boolean;
 };
 
 const initialState: InitialStateProps = {
-  logOutDialogVisibility: false,
   profileModal: false,
+  logOutDialogVisibility: false,
+  authProcessDialog: false,
 };
 
 const modalSlice = createSlice({
@@ -20,9 +22,15 @@ const modalSlice = createSlice({
     setProfileModalVisibility(state) {
       state.profileModal = !state.profileModal;
     },
+    setAuthProcessDialog(state) {
+      state.authProcessDialog = !state.authProcessDialog;
+    },
   },
 });
 
 export default modalSlice.reducer;
-export const { setLogOutDialogVisibility, setProfileModalVisibility } =
-  modalSlice.actions;
+export const {
+  setLogOutDialogVisibility,
+  setProfileModalVisibility,
+  setAuthProcessDialog,
+} = modalSlice.actions;
