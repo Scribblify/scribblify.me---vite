@@ -1,13 +1,13 @@
 import { FC, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { IconRenderer } from "@/generic/icon-renderer";
-import { Separator } from "@/components/ui/separator";
-import facebook from "/social-outlets/facebook.svg";
-import twitter from "/social-outlets/twitter.svg";
-import google from "/social-outlets/google.svg";
 import { useAuth } from "../customs/request";
 import { Helmet } from "react-helmet-async";
+import EmailVerification from "../customs/email-verification";
+import { useReduxDispatch } from "@/hooks/useRedux";
+import { setEmailVerificationDialog } from "@/redux/modalSlice";
+import axios from "axios";
+import { IIP_ADDRESS } from "@/@types";
 
 const SignUpHelmet: FC = () => {
   return (
@@ -23,6 +23,7 @@ const SignUpHelmet: FC = () => {
 };
 
 const SignUp: FC = () => {
+  const dispatch = useReduxDispatch();
   const [loading, setLoading] = useState<boolean>(false);
   const auth = useAuth();
   const emailRef = useRef<HTMLInputElement>(null);
@@ -33,13 +34,21 @@ const SignUp: FC = () => {
     e.preventDefault();
     setLoading(true);
 
+    const { data }: { data: IIP_ADDRESS } = await axios({
+      url: "https://ipapi.co/json",
+    });
+
     await auth({
       url: "/user/sign-up",
       body: {
         email: emailRef.current?.value,
         password: passwordRef.current?.value,
         username: usernameRef.current?.value,
+        ip_address: data.ip,
       },
+      callbackFunc: ({ error }) =>
+        !error && dispatch(setEmailVerificationDialog()),
+      cancelNavigatingInSuccess: true,
     });
 
     setLoading(false);
@@ -48,6 +57,7 @@ const SignUp: FC = () => {
   return (
     <div>
       <SignUpHelmet />
+      <EmailVerification />
       <form onSubmit={onSignUp}>
         <Input
           type="email"
@@ -93,23 +103,6 @@ const SignUp: FC = () => {
           </Button>
         </div>
       </form>
-      <div className="relative w-full flex justify-center items-center text-center">
-        <p className="bg-[#fff] dark:bg-[#222222] text-sm absolute p-2">
-          Or create a blog with
-        </p>
-        <Separator className="my-6" />
-      </div>
-      <div className="flex gap-2 justify-center">
-        <IconRenderer>
-          <img src={google} alt={"google"} />
-        </IconRenderer>
-        <IconRenderer>
-          <img src={facebook} alt={"facebook"} />
-        </IconRenderer>
-        <IconRenderer>
-          <img src={twitter} alt={"twitter"} />
-        </IconRenderer>
-      </div>
     </div>
   );
 };
