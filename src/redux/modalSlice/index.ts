@@ -4,12 +4,14 @@ type InitialStateProps = {
   profileModal: boolean;
   logOutDialogVisibility: boolean;
   authProcessDialog: boolean;
+  emailVerificationDialog: boolean;
 };
 
 const initialState: InitialStateProps = {
   profileModal: false,
   logOutDialogVisibility: false,
   authProcessDialog: false,
+  emailVerificationDialog: false,
 };
 
 const modalSlice = createSlice({
@@ -25,6 +27,9 @@ const modalSlice = createSlice({
     setAuthProcessDialog(state) {
       state.authProcessDialog = !state.authProcessDialog;
     },
+    setEmailVerificationDialog(state) {
+      state.emailVerificationDialog = !state.emailVerificationDialog;
+    },
   },
 });
 
@@ -32,5 +37,6 @@ export default modalSlice.reducer;
 export const {
   setLogOutDialogVisibility,
   setProfileModalVisibility,
+  setEmailVerificationDialog,
   setAuthProcessDialog,
 } = modalSlice.actions;

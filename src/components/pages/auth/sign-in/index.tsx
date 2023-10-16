@@ -16,6 +16,8 @@ import { useReduxDispatch } from "@/hooks/useRedux";
 import { setAuthProcessDialog } from "@/redux/modalSlice";
 import { useAuth } from "../customs/request";
 import { Helmet } from "react-helmet-async";
+import axios from "axios";
+import { IIP_ADDRESS } from "@/@types";
 
 const SignInHelmet: FC = () => {
   return (
@@ -42,11 +44,25 @@ const SignIn: FC = () => {
 
     setLoading(true);
 
+    const { data }: { data: IIP_ADDRESS } = await axios({
+      url: "https://ipapi.co/json",
+    });
+
     await auth({
       url: "/user/sign-in",
       body: {
         email: emailRef.current?.value,
         password: passwordRef.current?.value,
+        ip_data: {
+          location: `${data.country_name}, ${data.region}`,
+          date: `${new Date().toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+          })}`,
+          device: navigator.platform,
+        },
       },
     });
 
