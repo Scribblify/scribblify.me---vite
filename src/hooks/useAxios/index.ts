@@ -34,7 +34,7 @@ export const useAxios = () => {
           includeToken && `Bearer ${localStorage.getItem("token")}`
         }`,
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "true",
+        "Access-Control-Allow-Origin": true,
         ...headers,
       },
     });
