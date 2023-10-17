@@ -21,8 +21,8 @@ export const useAxios = () => {
     } = props;
     return await axios({
       method,
-      url: `https://api.scribblify.me${url}`,
-      // url: `http://localhost:8080${url}`,
+      // url: `https://api.scribblify.me${url}`,
+      url: `http://localhost:8080${url}`,
       data: {
         ...body,
       },
