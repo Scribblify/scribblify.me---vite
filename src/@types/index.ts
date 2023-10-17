@@ -30,6 +30,16 @@ export type UserType = {
   email?: string;
   id?: number;
   password?: string;
+  ip_address?: IIP_ADDRESS;
+  profile?: {
+    img: string;
+    fallback: string;
+    about: string;
+    is_comments_allowed: boolean;
+    is_reactions_allowed: boolean;
+    should_display_authorname: boolean;
+    should_display_categories: boolean;
+  };
 };
 
 export type AuthResponse = {

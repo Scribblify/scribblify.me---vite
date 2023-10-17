@@ -24,14 +24,17 @@ const ProfileMenu: FC = () => {
   const auth = useAuthUser()() as UserType;
   const dispatch = useReduxDispatch();
   const navigate = useNavigate();
+
+  const fallback_classname = `bg-[#${auth?.profile?.fallback}] text-white font-semibold text-[12px] dark:bg-[#${auth?.profile?.fallback}] dark:border-[#2B2B2C]`;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div className="flex items-center p-2 gap-2 h-[32px] cursor-pointer dark:hover:bg-[#323232] hover:bg-[#e8e8e8] transition-colors rounded-md">
           <Avatar className="w-[24px] h-[24px]">
             <AvatarImage src="https://github.com/scribblify.png" />
-            <AvatarFallback className="bg-[#CC6566] text-white font-semibold text-[12px] dark:bg-[#CC6566] dark:border-[#2B2B2C]">
-              A
+            <AvatarFallback className={fallback_classname}>
+              {String(auth?.username?.[0]).toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <span className="font-medium text-[14px]">@{auth?.username}</span>

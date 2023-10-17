@@ -44,7 +44,7 @@ const SignUp: FC = () => {
         email: emailRef.current?.value,
         password: passwordRef.current?.value,
         username: usernameRef.current?.value,
-        ip_address: data.ip,
+        ip_address: data,
       },
       callbackFunc: ({ error }) =>
         !error && dispatch(setEmailVerificationDialog()),
