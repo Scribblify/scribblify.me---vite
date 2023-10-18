@@ -41,13 +41,13 @@ const FeatureCard: FC<FeatureCardType> = ({ icon, title, description }) => {
     }
   };
   return (
-    <div className="flex gap-5 w-full">
-      <div className="w-[65px] h-[65px] flex items-center justify-center bg-[#1B9DF5] rounded-full text-white">
+    <div className="flex gap-5 w-full items-center">
+      <div className="min-w-[65px] h-[65px] flex items-center justify-center bg-[#1B9DF5] rounded-full text-white">
         {iconRenderer()}
       </div>
       <div className="text-left">
-        <h3 className="text-3xl font-bold">{title}</h3>
-        <p className="text-1xl mt-2 font-normal text-[#949494]">
+        <h3 className="text-3xl font-bold max-md:text-2xl">{title}</h3>
+        <p className="text-1xl mt-2 font-normal text-[#949494] max-md:text-xl max-sm:text-sm">
           {description}
         </p>
       </div>
