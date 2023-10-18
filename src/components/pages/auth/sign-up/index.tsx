@@ -10,6 +10,7 @@ import axios from "axios";
 import { IIP_ADDRESS } from "@/@types";
 import { IconRenderer } from "@/generic/icon-renderer";
 import { Eye, EyeOff } from "lucide-react";
+import UsernameInput from "@/generic/input";
 
 const SignUpHelmet: FC = () => {
   return (
@@ -86,21 +87,11 @@ const SignUp: FC = () => {
             {showPw ? <EyeOff /> : <Eye />}
           </IconRenderer>
         </div>
-        <div className="relative">
-          <p
-            onClick={() => usernameRef.current?.focus()}
-            className="absolute dark:text-[#fff] text-sm top-[10px] left-3 select-none"
-          >
-            scribblify.me/@
-          </p>
-          <Input
-            required
-            ref={usernameRef}
-            className="mt-3 pl-[110px]"
-            placeholder="username"
-            max={40}
-          />
-        </div>
+        <UsernameInput
+          focus={() => usernameRef?.current?.focus()}
+          ref={usernameRef}
+        />
+
         <div className="flex justify-center mt-5">
           <Button type="submit">
             {loading ? (
