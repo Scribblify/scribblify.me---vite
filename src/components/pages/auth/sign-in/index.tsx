@@ -18,6 +18,7 @@ import { useAuth } from "../customs/request";
 import { Helmet } from "react-helmet-async";
 import axios from "axios";
 import { IIP_ADDRESS } from "@/@types";
+import { Eye, EyeOff } from "lucide-react";
 
 const SignInHelmet: FC = () => {
   return (
@@ -35,6 +36,7 @@ const SignInHelmet: FC = () => {
 const SignIn: FC = () => {
   const dispatch = useReduxDispatch();
   const [loading, setLoading] = useState<boolean>(false);
+  const [showPw, setShowPw] = useState<boolean>();
   const auth = useAuth();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -118,14 +120,22 @@ const SignIn: FC = () => {
           max={40}
           ref={emailRef}
         />
-        <Input
-          type="password"
-          className="mt-3"
-          placeholder="Password"
-          max={40}
-          required
-          ref={passwordRef}
-        />
+        <div className="relative">
+          <Input
+            ref={passwordRef}
+            required
+            type={showPw ? "text" : "password"}
+            className="mt-3"
+            placeholder="Password"
+            max={40}
+          />
+          <IconRenderer
+            className="absolute right-2 bottom-1"
+            onClick={() => setShowPw(!showPw)}
+          >
+            {showPw ? <EyeOff /> : <Eye />}
+          </IconRenderer>
+        </div>
         <div className="flex justify-center mt-5">
           <Button type="submit">
             {loading ? (
