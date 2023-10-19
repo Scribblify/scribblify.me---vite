@@ -10,13 +10,16 @@ import { UserType } from "@/@types";
 const MainProfile: FC = () => {
   const auth = useAuthUser()() as UserType;
 
-  const profile_classname = `bg-[#${auth?.profile?.fallback}] text-white font-semibold text-[32px] dark:bg-[#CC6566] dark:border-[#${auth?.profile?.fallback}]`;
-
   return (
     <div className="w-[30%] max-lg:w-[40%] bg-white dark:bg-[#222222] p-4 rounded-3xl max-md:w-full border dark:border-[#393939] transition-colors">
       <Avatar className="w-[104px] h-[104px] m-auto">
         <AvatarImage src="https://github.com/scribblify.png" />
-        <AvatarFallback className={profile_classname}>
+        <AvatarFallback
+          style={{
+            background: `#${auth?.profile?.fallback}`,
+          }}
+          className={`bg-[#${auth?.profile?.fallback}] text-white font-semibold text-[32px] dark:bg-[#${auth?.profile?.fallback}] dark:border-[#2B2B2C]`}
+        >
           {String(auth?.username?.[0]).toUpperCase()}
         </AvatarFallback>
       </Avatar>

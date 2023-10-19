@@ -6,8 +6,6 @@ import { Helmet } from "react-helmet-async";
 import EmailVerification from "../customs/email-verification";
 import { useReduxDispatch } from "@/hooks/useRedux";
 import { setEmailVerificationDialog } from "@/redux/modalSlice";
-import axios from "axios";
-import { IIP_ADDRESS } from "@/@types";
 import { IconRenderer } from "@/generic/icon-renderer";
 import { Eye, EyeOff } from "lucide-react";
 import UsernameInput from "@/generic/input";
@@ -38,17 +36,12 @@ const SignUp: FC = () => {
     e.preventDefault();
     setLoading(true);
 
-    const { data }: { data: IIP_ADDRESS } = await axios({
-      url: "https://ipapi.co/json",
-    });
-
     await auth({
       url: "/user/sign-up",
       body: {
         email: emailRef.current?.value,
         password: passwordRef.current?.value,
         username: usernameRef.current?.value,
-        ip_address: data,
       },
       callbackFunc: ({ error }) =>
         !error && dispatch(setEmailVerificationDialog()),
