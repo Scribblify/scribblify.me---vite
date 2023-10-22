@@ -24,7 +24,7 @@ export const useAxios = () => {
       // url: `https://api.scribblify.me${url}`,
       // url: `http://localhost:8080${url}`,
       // url: `https://scribblify.abduvoitov.com${url}`,
-      url: `https://docs.scribblify.me/${url}`,
+      url: `https://docs.scribblify.me${url}`,
       data: {
         ...body,
       },
