@@ -21,10 +21,10 @@ export const useAxios = () => {
     } = props;
     return await axios({
       method,
-      // url: `https://api.scribblify.me${url}`,
+      url: `https://api.scribblify.me${url}`,
       // url: `http://localhost:8080${url}`,
       // url: `https://scribblify.abduvoitov.com${url}`,
-      url: `https://docs.scribblify.me${url}`,
+      // url: `https://docs.scribblify.me${url}`,
       data: {
         ...body,
       },
@@ -36,7 +36,7 @@ export const useAxios = () => {
           includeToken && `Bearer ${localStorage.getItem("token")}`
         }`,
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "https://www.scribblify.me",
+        "Access-Control-Allow-Origin": true,
         ...headers,
       },
     });
