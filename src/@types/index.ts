@@ -2,6 +2,7 @@ export type SettingPrePages =
   | "/wallet"
   | "/settings"
   | "/general"
+  | "/active-sessions"
   | "/members"
   | "/domain-and-analytics"
   | "/categories"

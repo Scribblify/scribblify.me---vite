@@ -1,8 +1,13 @@
 import { Button } from "@/components/ui/button";
 import FeatureCard from "./feature-card";
 import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 
 const Animation = () => {
+  const socket = io("http://localhost:8080");
+
+  console.log(socket);
+
   const navigate = useNavigate();
   return (
     <div className="text-center  mt-9 max-w-[1200px] m-auto gap-8 px-5">

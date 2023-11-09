@@ -6,6 +6,7 @@ import {
   CopyCheck,
   Eye,
   Microscope,
+  MonitorDot,
   Rotate3D,
   Settings,
   Users2,
@@ -17,6 +18,7 @@ import DomainAndAnalytics from "@/components/navbar/settings/_prepages/domain-an
 import Categories from "@/components/navbar/settings/_prepages/categories";
 import Navigation from "@/components/navbar/settings/_prepages/navigation";
 import BlogTransfer from "@/components/navbar/settings/_prepages/blog-transfer";
+import ActiveSessions from "@/components/navbar/settings/_prepages/active-sessions";
 
 interface IconArgs {
   className: string;
@@ -70,6 +72,21 @@ export const data: SettingItemType[] = [
     Component: General,
     icon: ({ className }: { className: string }) => (
       <Eye width="18" height="18" className={className} strokeWidth="1.5" />
+    ),
+    size: "small",
+  },
+  {
+    title: "Active Sessions",
+    isTitle: true,
+    path: "/active-sessions",
+    Component: ActiveSessions,
+    icon: ({ className }: { className: string }) => (
+      <MonitorDot
+        width="18"
+        height="18"
+        className={className}
+        strokeWidth="1.5"
+      />
     ),
     size: "small",
   },
