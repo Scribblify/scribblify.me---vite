@@ -37,7 +37,7 @@ jobs:
           CI: false
 
       - name: List output files
-        run: find build/ -print
+        run: find dist/ -print
 
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
@@ -45,5 +45,5 @@ jobs:
           server: server1.ahost.cloud
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          local-dir: build/
+          local-dir: dist/
           server-dir: /
