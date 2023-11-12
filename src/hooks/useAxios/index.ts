@@ -21,8 +21,7 @@ export const useAxios = () => {
     } = props;
     return await axios({
       method,
-      url: `https://api.scribblify.me${url}`,
-      // url: `http://localhost:8080${url}`,
+      url: `${import.meta.env.VITE_REACT_BASE_URL}${url}`,
       data: {
         ...body,
       },

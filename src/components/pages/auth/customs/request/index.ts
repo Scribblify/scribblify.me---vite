@@ -1,11 +1,13 @@
 import { AuthResponse } from "@/@types";
 import { useToast } from "@/components/ui/use-toast";
 import { useAxios } from "@/hooks/useAxios";
+import { userTracking } from "@/tools/user-tracking";
 import { useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 
 export const useAuth = () => {
   const { toast } = useToast();
+  const { getID } = userTracking();
   const axios = useAxios();
   const signIn = useSignIn();
   const navigate = useNavigate();
@@ -30,10 +32,26 @@ export const useAuth = () => {
       body: body,
     })
       .then((res) => {
+        const db_request = indexedDB.open("session", 1);
         if (callbackFunc) callbackFunc({ success: res });
         if (cancelNavigatingInSuccess) return;
 
         const { data }: { data: AuthResponse } = res;
+
+        db_request.onsuccess = () => {
+          const db: IDBDatabase = db_request.result;
+          const transaction: IDBTransaction = db.transaction(
+            ["s_id"],
+            "readwrite"
+          );
+          const objectStore: IDBObjectStore = transaction.objectStore("s_id");
+
+          const addRequest: IDBRequest = objectStore.add(getID());
+
+          addRequest.onsuccess = () => {
+            console.log("Session id -> s_id");
+          };
+        };
 
         signIn({
           token: data.data.token,

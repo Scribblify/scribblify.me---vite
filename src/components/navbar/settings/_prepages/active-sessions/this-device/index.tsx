@@ -2,8 +2,10 @@ import type { FC } from "react";
 import { Chrome } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { userTracking } from "@/tools/user-tracking";
 
 const ThisDevice: FC = () => {
+  const { getID } = userTracking();
   return (
     <div className="mt-4">
       <p className="text-xs">This Device</p>
@@ -25,7 +27,13 @@ const ThisDevice: FC = () => {
           </div>
         </div>
         <Separator />
-        <Button className="text-red-500 mt-2" variant={"link"}>
+        <Button
+          onClick={() => {
+            console.log(getID());
+          }}
+          className="text-red-500 mt-2"
+          variant={"link"}
+        >
           Terminate all other sessions
         </Button>
       </div>
